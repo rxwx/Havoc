@@ -228,7 +228,7 @@ BOOL BypassPatchAMSI(
     VOID
 );
 
-ULONG RandomNumber32(
+LONG RandomNumber32(
     VOID
 );
 
