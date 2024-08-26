@@ -174,6 +174,7 @@ func NewBuilder(config BuilderConfig) *Builder {
 	 * --no-seh                        Image does not use SEH.
 	 * --enable-stdcall-fixup          Link _sym to _sym@nn without warnings.
 	 * --gc-sections                   Decides which input sections are used by examining symbols and relocations.
+     * -mrdrnd                         Enable the use of the rdrand instruction (hardware random number generation).
 	 */
 
 	logger.Debug(fmt.Sprintf("Payload Builder: Enable Debug Mode %v", config.DebugDev))
@@ -187,6 +188,7 @@ func NewBuilder(config BuilderConfig) *Builder {
 			"-ffunction-sections -fdata-sections -falign-jumps=1 -w",
 			"-falign-labels=1 -fPIC",
 			"-Wl,--no-seh,--enable-stdcall-fixup,--gc-sections",
+            "-mrdrnd",
 		}
 	} else {
 		builder.compilerOptions.CFlags = []string{
@@ -196,6 +198,7 @@ func NewBuilder(config BuilderConfig) *Builder {
 			"-s -ffunction-sections -fdata-sections -falign-jumps=1 -w",
 			"-falign-labels=1 -fPIC",
 			"-Wl,-s,--no-seh,--enable-stdcall-fixup,--gc-sections",
+			"-mrdrnd",
 		}
 	}
 

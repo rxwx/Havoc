@@ -1306,12 +1306,17 @@ ULONG RandomNumber32(
 ) {
     ULONG Seed = 0;
 
-    Seed = NtGetTickCount();
-    Seed = Instance->Win32.RtlRandomEx( &Seed );
-    Seed = Instance->Win32.RtlRandomEx( &Seed );
-    Seed = ( Seed % ( LONG_MAX - 2 + 1 ) ) + 2;
+    if ( Instance->RdRand ) {
+        _rdrand32_step( ( unsigned int* ) &Seed );
+    }
 
-    return Seed % 2 == 0 ? Seed : Seed + 1;
+    if ( ! Seed ) {
+        Seed = NtGetTickCount();
+        Seed = Instance->Win32.RtlRandomEx( &Seed );
+    }
+
+    // return values between 0 and 2147483647
+    return Seed % LONG_MAX;
 }
 
 /*!
@@ -1321,11 +1326,7 @@ ULONG RandomNumber32(
 BOOL RandomBool(
     VOID
 ) {
-    ULONG Seed = 0;
-
-    Seed = NtGetTickCount();
-    Seed = Instance->Win32.RtlRandomEx( &Seed );
-
+    ULONG Seed = RandomNumber32();
     return Seed % 2 == 0 ? TRUE : FALSE;
 }
 

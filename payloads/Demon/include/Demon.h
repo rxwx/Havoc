@@ -6,6 +6,7 @@
 #include <ntstatus.h>
 #include <aclapi.h>
 #include <windns.h>
+#include <intrin.h>
 
 #include <common/Native.h>
 #include <common/Macros.h>
@@ -536,6 +537,9 @@ typedef struct
     /* This is a global variable for dotnet inline-execute
      * holds our CLR instance, assembly and where to output. */
     PDOTNET_ARGS Dotnet;
+
+    /* A global variable indicating if rdrand is supported */
+    BOOL RdRand;
 
     /* Linked lists */
     struct {
