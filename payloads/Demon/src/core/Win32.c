@@ -1298,10 +1298,10 @@ BOOL EventSet(
 
 
 /*!
- * generates a random unsigned 32-bit integer
+ * generates a random signed 32-bit integer
  * @return
  */
-ULONG RandomNumber32(
+LONG RandomNumber32(
     VOID
 ) {
     ULONG Seed = 0;
@@ -1315,8 +1315,7 @@ ULONG RandomNumber32(
         Seed = Instance->Win32.RtlRandomEx( &Seed );
     }
 
-    // return values between 0 and 2147483647
-    return Seed % LONG_MAX;
+    return ( LONG ) ( Seed % LONG_MAX );
 }
 
 /*!
