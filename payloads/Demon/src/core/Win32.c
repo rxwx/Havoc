@@ -1298,7 +1298,7 @@ BOOL EventSet(
 
 
 /*!
- * generates a random signed 32-bit integer
+ * generates a random unsigned 32-bit integer
  * @return
  */
 ULONG RandomNumber32(
